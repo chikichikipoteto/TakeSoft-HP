@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TakeSoft | ソフトウェア・システム開発</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo"><img src="TakeSoft.png" alt="TakeSoftロゴ" class="logo-img"></div>
+    <nav>
+      <ul>
+        <li><a href="#about">会社紹介</a></li>
+        <li><a href="#services">サービス</a></li>
+        <li><a href="#contact">お問い合わせ</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="hero reveal">
+      <h1>ソフトウェアとシステム開発のTakeSoft</h1>
+      <p>最先端の技術で、ビジネスを加速させるソリューションを提供します。</p>
+      <a href="#contact" class="cta-btn">お問い合わせ</a>
+    </section>
+    <section id="about" class="about reveal">
+      <h2>会社紹介</h2>
+      <p>TakeSoft(タケソフト)は、ソフトウェアの開発を中心に、お客様の課題解決をサポートするIT企業です。</p>
+    </section>
+    <section id="pickup" class="pickup reveal">
+      <h2>注目</h2>
+      <div class="pickup-slider">
+        <img src="pickup1.png" alt="注目画像1" class="pickup-img active">
+        <img src="pickup2.png" alt="注目画像2" class="pickup-img">
+      </div>
+      <div class="pickup-indicators">
+        <span class="indicator active" data-index="0"></span>
+        <span class="indicator" data-index="1"></span>
+      </div>
+    </section>
+    <section id="services" class="services reveal">
+      <h2>サービス内容</h2>
+      <div class="service-block">
+        <h3>Time Gate</h3>
+        <p><strong>最も簡単で高速なエミュレーターソフトウェア</strong></p>
+        <ul>
+          <li>インストール後すぐに使えるシンプル設計</li>
+          <li>業界最速クラスのエミュレーション速度</li>
+          <li>多様なプラットフォームに対応</li>
+          <li>直感的なユーザーインターフェース</li>
+        </ul>
+        <p><strong>料金：</strong>無料</p>
+        <a href="TimeGate.zip" class="download-btn" download>ダウンロード</a>
+        <a href="TimeGate_manual.pdf" class="download-btn pdf" download>PDFダウンロード</a>
+        <div class="download-note">Windows 64Bit対応</div>
+        <div class="disclaimer">Time Gateは個人で作成したソフトウェアです。バグやエラー、クラッシュなどが発生する恐れがあります。</div>
+        <div class="usage-toggle">
+          <button class="toggle-btn" onclick="toggleUsage()">利用方法を表示 ▼</button>
+          <div class="usage-content">
+            <div class="usage-steps">
+              <div class="step">
+                <h4>1. ダウンロード</h4>
+                <p>上記の「ダウンロード」ボタンからTimeGate.zipをダウンロードしてください。</p>
+              </div>
+              <div class="step">
+                <h4>2. 解凍</h4>
+                <p>ダウンロードしたzipファイルを任意のフォルダに解凍してください。</p>
+              </div>
+              <div class="step">
+                <h4>3. 起動</h4>
+                <p>解凍したフォルダ内の実行ファイルをダブルクリックして起動してください。</p>
+              </div>
+              <div class="step">
+                <h4>4. 利用開始</h4>
+                <p>直感的なインターフェースで、すぐにエミュレーションを開始できます。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 他のサービスがあればここに追加可能 -->
+    </section>
+    <section id="contact" class="contact reveal">
+      <h2>お問い合わせ</h2>
+      <form>
+        <input type="text" placeholder="お名前" required>
+        <input type="email" placeholder="メールアドレス" required>
+        <textarea placeholder="お問い合わせ内容" required></textarea>
+        <button type="submit">送信</button>
+      </form>
+    </section>
+  </main>
+  <footer>
+    <small>&copy; 2024 TakeSoft. All rights reserved.</small>
+  </footer>
+  <script>
+    // Intersection Observerでrevealクラスにアニメーションを適用
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(el => observer.observe(el));
+
+    // 注目欄スライドショー
+    const pickupImgs = document.querySelectorAll('.pickup-img');
+    const indicators = document.querySelectorAll('.indicator');
+    let pickupIdx = 0;
+    let slideInterval = setInterval(() => {
+      pickupImgs.forEach((img, i) => img.classList.toggle('active', i === pickupIdx));
+      indicators.forEach((ind, i) => ind.classList.toggle('active', i === pickupIdx));
+      pickupIdx = (pickupIdx + 1) % pickupImgs.length;
+    }, 5000);
+    
+    // インジケータークリック時の画像切り替え
+    indicators.forEach((indicator, index) => {
+      indicator.addEventListener('click', () => {
+        pickupIdx = index;
+        pickupImgs.forEach((img, i) => img.classList.toggle('active', i === pickupIdx));
+        indicators.forEach((ind, i) => ind.classList.toggle('active', i === pickupIdx));
+      });
+    });
+   
+   // 利用方法の折りたたみ機能
+   function toggleUsage() {
+     const content = document.querySelector('.usage-content');
+     const btn = document.querySelector('.toggle-btn');
+     if (content.classList.contains('show')) {
+       content.classList.remove('show');
+       btn.textContent = '利用方法を表示 ▼';
+     } else {
+       content.classList.add('show');
+       btn.textContent = '利用方法を隠す ▲';
+     }
+   }
+
+   // ヘッダーのスライドインアニメーション
+   window.addEventListener('DOMContentLoaded', () => {
+     setTimeout(() => {
+       document.querySelector('header').classList.add('header-slidein');
+     }, 100);
+   });
+  </script>
+</body>
+</html> 
